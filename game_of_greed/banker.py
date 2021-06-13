@@ -4,10 +4,13 @@ class Banker:
         self.balance=0
     
     def shelf(self,points):
-        
-        self.shelved=points
+      
+
+        self.shelved=+points
         
     def bank(self):
+
+      
                
         self.balance=self.balance+self.shelved
         self.shelved=0
@@ -15,6 +18,7 @@ class Banker:
         return self.balance
 
     def clear_shelf(self):
+
      
         self.shelved=0
         
