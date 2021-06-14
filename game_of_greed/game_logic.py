@@ -52,7 +52,7 @@ class GameLogic:
         dice=Counter(dice2)
         x=list(dice2)
         x.sort()
-        if len(x)==6 and x[0]==1 and x[5]==6:
+        if len(x)==6 and x[0]==1 and x[1]==2 and x[2]==3 and x[3]==4 and x[4]==5 and x[5]==6 :
             score=score+scores['straight']
 
         elif len(dice.most_common())==3 and dice.most_common()[1][1] == 2 and dice.most_common()[1][1] == 2 and dice.most_common()[2][1] == 2:
