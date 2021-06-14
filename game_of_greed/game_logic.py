@@ -18,7 +18,8 @@ scores={
     (2, 4): 400,
     (2, 5): 600,
     (2, 6): 800,
-#___________________    
+#___________________
+    (3, 3): 300,
     (3, 4): 600,
     (3, 5): 900,
     (3, 6): 1200,
@@ -48,21 +49,20 @@ class GameLogic:
     def roll_dice(num_dice):
           return tuple(random.randint(1,6) for _ in range(0,num_dice))
 
-    def calculate_score(dice):
+    def calculate_score(dice2):
         score=0
-        x=False
         
-        dice=Counter(dice)
-        print(dice.most_common())
-        # [(3, 1), (1, 1), (6, 1), (2, 1), (5, 1), (4, 1)]
-        print(len(dice.most_common()))
+        
+        dice=Counter(dice2)
+        
+        x=list(dice2)
+        x.sort()
 
-        if 1==1:
-            pass
-            # score=score+scores['straight']
-        elif len(dice.most_common())==3 and dice.most_common(3)[2][1] == 2:
+        if len(x)==6 and x[0]==1 and x[5]==6:
+
+            score=score+scores['straight']
+        elif len(dice.most_common())==3 and dice.most_common()[1][1] == 2 and dice.most_common()[1][1] == 2 and dice.most_common()[2][1] == 2:
             score=score+scores['three pairs']
-            print('hello')      
         else:
           for i in range(len(dice.most_common())):
 
@@ -77,4 +77,4 @@ class GameLogic:
 
 
 if __name__=='__main__':
-  print(GameLogic.calculate_score((2,2,3,3,4,4)))
+  print(GameLogic.calculate_score((5,6,2,3,4,1)))
