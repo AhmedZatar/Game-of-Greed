@@ -14,10 +14,7 @@ class Game:
         print(printable_dice)
         user_choice=input('Enter dice to keep (no spaces), or (q)uit: ')
         if user_choice=='q':
-            if round>1:
-                print(f'Total score is {banker.balance} points')
-
-            print(f'Thanks for playing. You earned {banker.balance} points')
+            self.quit(banker,round)
         else:
             user_choice_list=[]
             
@@ -34,22 +31,32 @@ class Game:
             
             user_choice=input('(r)oll again, (b)ank your points or (q)uit ')
             if user_choice=='b':
-                banker.bank()
-                print(f'You banked {total} points in round {round}')
-                round+=1
-                print(f'Total score is {banker.balance} points')
-                banker.clear_shelf() 
-                dice_reminde=6
-                self.newRound(banker,round,total,dice_reminde)
-                
+                self.bank(banker,round,total,dice_reminde)
+                              
             elif user_choice=='r':
                 round+=1
                 self.newRound(banker,round,total,dice_reminde)
             
             elif user_choice=='q':
-                banker.bank()
+                self.quit(banker,round)
+                
+    
+    def bank(self,banker,round,total,dice_reminde):
+        banker.bank()
+        print(f'You banked {total} points in round {round}')
+        round+=1
+        print(f'Total score is {banker.balance} points')
+        dice_reminde=6
+        self.newRound(banker,round,total,dice_reminde)
 
-                print(f'Thanks for playing. You earned {banker.balance} points')
+
+    def quit(self,banker,round):
+        banker.bank()
+        if round>1:
+            print(f'Total score is {banker.balance} points')
+
+        print(f'Thanks for playing. You earned {banker.balance} points')
+
 
 
     def  play(self):
