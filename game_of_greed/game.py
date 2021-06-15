@@ -1,7 +1,6 @@
 from game_of_greed.game_logic import GameLogic
 from game_of_greed.banker import Banker
-import os
-import sys
+
 
 class Game:
     def __init__(self,roller=None):
@@ -23,13 +22,15 @@ class Game:
         self.newRound(banker,round,total,dice_reminde)
 
 
-    def quit(self,banker,round):
+    def quit(self,banker):
         
         
         print(f'Total score is {banker.balance} points')
 
         print(f'Thanks for playing. You earned {banker.balance} points')
         self.quitnumber=0
+    
+
     
     def startplay(self,banker,round,total,dice_reminde,printable_dice,dice):
 
@@ -49,14 +50,14 @@ class Game:
 
             self.newRound(banker,round,total,dice_reminde)
         
-        # try:          
-        user_choice=input('Enter dice to keep (no spaces), or (q)uit: ')
-        # except:
-        #     pass
-                  
+        if(self.quitnumber):
+          user_choice=input('Enter dice to keep (no spaces), or (q)uit: ')
+        else:
+            return
+                
         if user_choice=='q':
 
-            self.quit(banker,round)
+            self.quit(banker)
             
         else:
             user_choice_list=[]
@@ -116,7 +117,7 @@ class Game:
                 self.roundstart(banker,round,total,dice_reminde)
             
             elif user_choice=='q':
-                self.quit(banker,round)
+                self.quit(banker)
                 return
     
     def roundstart(self,banker,round,total,dice_reminde):
@@ -142,9 +143,6 @@ class Game:
             self.newRound(banker,round,banking,dice_reminde)
              
 
-            
-            
-                    
 
 
 if __name__ == "__main__":
