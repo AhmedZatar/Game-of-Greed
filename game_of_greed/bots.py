@@ -68,6 +68,46 @@ class NervousNellie(BasePlayer):
         elif first_arg.startswith("Thanks for playing."):
             self.total_score = int(re.findall(r"\d+", first_arg)[0])
         self.old_print(first_arg)
+
+    def _mock_input(self, *args):
+        
+        prompt = args[0]
+        if prompt.startswith("Wanna play?"):
+            return "y"
+        elif prompt.startswith("Enter dice to keep (no spaces), or (q)uit:"):
+            scorers = GameLogic.get_scorers(self.roll)
+            keepers = "".join([str(ch) for ch in scorers])
+            return keepers
+        elif prompt.startswith("(r)oll again, (b)ank your points or (q)uit "):
+            return "b"
+        else:
+            raise ValueError(f"Unrecognized prompt {prompt}")
+
+class BasicBot(BasePlayer):
+    def __init__(self):
+        super().__init__()
+    def _mock_input(self, *args):
+        x = args[0]
+        if x.startswith('Wanna play?'):
+
+            return 'n'
+    def _mock_print(self, *args):
+        self.old_print(*args)
+
+
+class Ourbot(BasePlayer):
+    def __init__(self):
+        super().__init__()
+        self.roll = None
+
+    def _mock_print(self, *args):
+        first_arg = args[0]
+        first_char = first_arg[0]
+        if first_char.isdigit():
+            self.roll = tuple(int(char) for char in first_arg.split(","))
+        elif first_arg.startswith("Thanks for playing."):
+            self.total_score = int(re.findall(r"\d+", first_arg)[0])
+        self.old_print(first_arg)
     r=0
     def _mock_input(self, *args):
         
@@ -88,18 +128,8 @@ class NervousNellie(BasePlayer):
         else:
             raise ValueError(f"Unrecognized prompt {prompt}")
 
-class BasicBot(BasePlayer):
-    def __init__(self):
-        super().__init__()
-    def _mock_input(self, *args):
-        x = args[0]
-        if x.startswith('Wanna play?'):
-
-            return 'n'
-    def _mock_print(self, *args):
-        self.old_print(*args)
-    
 
 if __name__ == "__main__":
     # BasicBot.play(100)
-    NervousNellie.play(100)
+    # NervousNellie.play(100)
+    Ourbot.play(100)
