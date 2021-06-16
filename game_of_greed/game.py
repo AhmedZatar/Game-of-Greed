@@ -1,14 +1,16 @@
+from game_of_greed import game_logic
 from game_of_greed.game_logic import GameLogic
 from game_of_greed.banker import Banker
 
 
 class Game:
     def __init__(self,roller=None):
-        self.roller=roller
+        self.roller=roller or GameLogic.roll_dice
         self.quitnumber=1
 
     def newRound(self,banker,round,total,dice_reminde):
         
+    
         print(f'Starting round {round}')
         self.roundstart(banker,round,total,dice_reminde)
                
@@ -23,8 +25,7 @@ class Game:
 
 
     def quit(self,banker):
-        
-        
+              
         print(f'Total score is {banker.balance} points')
 
         print(f'Thanks for playing. You earned {banker.balance} points')
@@ -37,7 +38,7 @@ class Game:
 
 
 
-
+        
         print(printable_dice)
         x= self.zlich(dice)
         if not x:
@@ -121,11 +122,19 @@ class Game:
                 return
     
     def roundstart(self,banker,round,total,dice_reminde):
-        print(f'Rolling {dice_reminde} dice...')
-        dice=self.roller(dice_reminde)
 
-        printable_dice = ','.join([str(d) for d in dice])
-        self.startplay(banker,round,total,dice_reminde,printable_dice,dice)
+        if round > 20:
+            self.quit(banker)
+        else:
+
+            if dice_reminde == 0:
+                dice_reminde=6
+             
+            print(f'Rolling {dice_reminde} dice...')
+            dice=self.roller(dice_reminde)
+
+            printable_dice = ','.join([str(d) for d in dice])
+            self.startplay(banker,round,total,dice_reminde,printable_dice,dice)
 
 
 
@@ -147,5 +156,5 @@ class Game:
 
 if __name__ == "__main__":
     roller = GameLogic.roll_dice
-    game = Game(roller)
+    game = Game()
     game.play()
