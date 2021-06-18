@@ -64,9 +64,27 @@ class GameLogic:
                 score=score+scores[(dice.most_common()[i][0]  ,dice.most_common()[i][1])]
               except KeyError:
                   score=score+0
-
-
         return score
+
+    @staticmethod
+    def get_scorers(dice):
+        # version_3
+
+        all_dice_score = GameLogic.calculate_score(dice) #1500
+
+        if all_dice_score == 0:
+            return tuple()
+
+        scorers = []
+        
+        for i in range(len(dice)):
+            sub_roll = dice[:i] + dice[i + 1 :]
+            sub_score = GameLogic.calculate_score(sub_roll)
+
+            if sub_score != all_dice_score:
+                scorers.append(dice[i])
+
+        return tuple(scorers)
             
 
 if __name__=='__main__':
